@@ -22,20 +22,24 @@
 
     <include layout="@layout/content_main" />
 
-    <Button
-        android:id="@+id/capture"
-        android:layout_width="182dp"
-        android:layout_height="103dp"
-        android:layout_below="@+id/toolbar"
-        android:layout_alignTop="@id/toolbar"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="281dp"
-        android:layout_marginEnd="113dp"
-        android:layout_marginBottom="346dp"
-        android:background="@color/colorPrimary"
-        android:padding="5dp"
+    <TextView
+        android:id="@+id/label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/button"
         android:text="@string/picture_button_text"
-        android:textColor="#ffffff" />
+        android:textSize="16pt"/>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:textColor="#ffffff"
+        android:background="@drawable/button_back"
+        />
 
 </RelativeLayout>

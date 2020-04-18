@@ -23,9 +23,10 @@
         app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
+        android:layout_width="810px"
+        android:layout_height="544px"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:src="@drawable/ic_launcher_background"
         android:id="@+id/image"/>
 
@@ -33,10 +34,10 @@
         android:id="@+id/label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@id/image"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="225dp"
-        android:text="Hello World"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:text="@string/class_default"
         android:textSize="16pt" />
 
 </RelativeLayout>

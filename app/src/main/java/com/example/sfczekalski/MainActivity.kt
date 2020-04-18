@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         Log.i("SickTrees", classifierPath)
         classifier = Classifier(classifierPath)
 
-        val capture: Button = findViewById(R.id.capture)
+        val capture: Button = findViewById(R.id.button)
 
         capture.setOnClickListener {
             Log.i("SickTrees", "CameraIntent")
