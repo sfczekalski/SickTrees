@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.content.Intent
 import android.graphics.Bitmap
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.Button
 import androidx.appcompat.widget.Toolbar
 
@@ -22,7 +23,9 @@ class MainActivity : AppCompatActivity() {
         val toolbar: Toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        classifier = Classifier(Utils.assetFilePath(this, "resnet.pt")!!)
+        val classifierPath = Utils.assetFilePath(this, "resnet_cpu.pt")!!
+        Log.i("ClassifierTag", classifierPath)
+        classifier = Classifier(classifierPath)
 
         val capture: Button = findViewById(R.id.capture)
 

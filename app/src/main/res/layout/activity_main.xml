@@ -11,15 +11,31 @@
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
     </com.google.android.material.appbar.AppBarLayout>
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:popupTheme="@style/AppTheme.PopupOverlay" />
+
     <include layout="@layout/content_main" />
+
+    <Button
+        android:id="@+id/capture"
+        android:layout_width="182dp"
+        android:layout_height="103dp"
+        android:layout_below="@+id/toolbar"
+        android:layout_alignTop="@id/toolbar"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="281dp"
+        android:layout_marginEnd="113dp"
+        android:layout_marginBottom="346dp"
+        android:background="@color/colorPrimary"
+        android:padding="5dp"
+        android:text="@string/picture_button_text"
+        android:textColor="#ffffff" />
 
 </RelativeLayout>
