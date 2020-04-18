@@ -2,6 +2,7 @@ package com.example.sfczekalski
 
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +20,7 @@ class Result : AppCompatActivity() {
         val imageBitmap = intent.getBundleExtra("imagedata")["data"] as Bitmap?
 
         val pred = intent.getStringExtra("pred")
+        Log.i("SickTrees", pred)
 
         val imageView: ImageView = findViewById(R.id.image)
         imageView.setImageBitmap(imageBitmap)
