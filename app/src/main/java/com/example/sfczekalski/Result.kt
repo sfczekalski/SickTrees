@@ -17,7 +17,9 @@ class Result : AppCompatActivity() {
         setContentView(R.layout.activity_result)
         setSupportActionBar(toolbar)
 
-        val imageBitmap = intent.getBundleExtra("imagedata")["data"] as Bitmap?
+        //val imageBitmap = intent.getBundleExtra("imagedata")["data"] as Bitmap?
+        var PhotoPath: String = intent.getStringExtra("photoPath")
+        val imageBitmap = Utils.compressResultImg(PhotoPath)
 
         val pred = intent.getStringExtra("pred")
         Log.i("SickTrees", pred)
