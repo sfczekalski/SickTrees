@@ -1,12 +1,10 @@
-package com.example.sfczekalski
+package com.example.sickTrees
 
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_result.*
 
 

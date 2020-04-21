@@ -1,4 +1,4 @@
-package com.example.sfczekalski
+package com.example.sickTrees
 
 import android.graphics.Bitmap
 import org.pytorch.IValue
