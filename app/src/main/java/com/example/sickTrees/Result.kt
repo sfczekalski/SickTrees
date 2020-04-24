@@ -7,7 +7,9 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.ImageView
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageMetadata
 import com.google.firebase.storage.StorageReference
@@ -23,40 +25,46 @@ class Result : AppCompatActivity() {
     lateinit var imageBitmap: Bitmap
     lateinit var pred: String
 
+    lateinit var storage_button: Button
+    lateinit var progress_bar: ProgressBar
+
+
     val storage: FirebaseStorage = FirebaseStorage.getInstance()
 
         override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_result)
-        setSupportActionBar(toolbar)
+            super.onCreate(savedInstanceState)
+            setContentView(R.layout.activity_result)
+            setSupportActionBar(toolbar)
 
-        //val imageBitmap = intent.getBundleExtra("imagedata")["data"] as Bitmap?
-        // Get image from intent
-        PhotoPath = intent.getStringExtra("photoPath")
-        imageBitmap = Utils.compressResultImg(PhotoPath)
+            //val imageBitmap = intent.getBundleExtra("imagedata")["data"] as Bitmap?
+            // Get image from intent
+            PhotoPath = intent.getStringExtra("photoPath")
+            imageBitmap = Utils.compressResultImg(PhotoPath)
 
-        // Set image in layout
-        val imageView: ImageView = findViewById(R.id.image)
-        imageView.setImageBitmap(imageBitmap)
+            // Set image in layout
+            val imageView: ImageView = findViewById(R.id.image)
+            imageView.setImageBitmap(imageBitmap)
 
-        // Get prediction from intent
-        pred = intent.getStringExtra("pred")
-        Log.i("SickTrees", pred)
+            // Get prediction from intent
+            pred = intent.getStringExtra("pred")
+            Log.i("SickTrees", pred)
 
-        // Set prediction in layout
-        val textView = findViewById<TextView>(R.id.label)
-        textView.text = pred
+            // Set prediction in layout
+            val textView = findViewById<TextView>(R.id.label)
+            textView.text = pred
 
-        /*fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }*/
+            /*fab.setOnClickListener { view ->
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show()
+            }*/
 
-        // Share to Storage button
-        val storage_button: Button = findViewById(R.id.button_storage)
+            // Share to Storage button reference
+            storage_button = findViewById(R.id.button_storage)
+            // Upload progress bar reference
+            progress_bar = findViewById(R.id.upload_progress_bar)
     }
 
-    private fun saveInStorage(view: View) {
+    fun saveInStorage(view: View) {
         val stream = ByteArrayOutputStream()
         imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
         val byteArray = stream.toByteArray()
@@ -68,6 +76,20 @@ class Result : AppCompatActivity() {
             setCustomMetadata("label", pred).
             build()
         val uploadTask: UploadTask = firebaseRef.putBytes(byteArray, meta)
+
+        // While uploading, make progress bar visible and storage button disabled
+        progress_bar.visibility = View.VISIBLE
+        storage_button.isEnabled = false
+
+        uploadTask.addOnFailureListener {
+            // Handle unsuccessful uploads
+            throw it
+        }.addOnSuccessListener {
+            // Handle successful upload
+            progress_bar.visibility = View.INVISIBLE
+            storage_button.isEnabled = true
+        }
+
     }
 
 }
