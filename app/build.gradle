@@ -63,4 +63,7 @@ dependencies {
     // For example, to also use Firebase Authentication
     implementation 'com.google.firebase:firebase-auth:19.3.0'
 
+    // Firebase Storage
+    implementation 'com.google.firebase:firebase-storage:19.1.1'
+
 }

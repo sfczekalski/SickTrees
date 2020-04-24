@@ -40,4 +40,14 @@
         android:text="@string/class_default"
         android:textSize="16pt" />
 
+    <Button
+        android:id="@+id/button_storage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:layout_below="@id/image"
+        android:text="Save in Storage"
+        android:onClick="saveInStorage"/>
+
 </RelativeLayout>

@@ -35,7 +35,7 @@ object Utils {
         return null
     }
 
-    fun compressResultImg(photoPath: String): Bitmap? {
+    fun compressResultImg(photoPath: String): Bitmap {
         // Target dimensions
         val targetW: Int = 2048
         val targetH: Int = 1365
