@@ -9,25 +9,24 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
-import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.FileProvider
-import com.google.android.gms.auth.api.Auth
+import com.google.android.gms.auth.api.signin.*
 //import androidx.test.orchestrator.junit.BundleJUnitUtils.getResult
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.auth.api.signin.GoogleSignInResult
 import com.google.android.gms.common.SignInButton
+import com.google.android.gms.common.api.ApiException
 import kotlinx.android.synthetic.main.activity_main.*
 //import org.junit.experimental.results.ResultMatchers.isSuccessful
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthProvider
 
 
 class MainActivity : AppCompatActivity() {
@@ -39,6 +38,7 @@ class MainActivity : AppCompatActivity() {
     private val signInRequestCode = 9001
     
     lateinit var statusTextView: TextView
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,11 +53,20 @@ class MainActivity : AppCompatActivity() {
         Log.i("SickTrees", classifierPath)
         classifier = Classifier(classifierPath)
 
+        // Firebase auth instance
+        auth = FirebaseAuth.getInstance()
+        val currentUser = auth.currentUser
+
         // Sing in button
         val options: GoogleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
         mSignInClient = GoogleSignIn.getClient(this, options)
+
+        val account: GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(this)
+        //updateUI(account)
+
         val singInButton: SignInButton = findViewById(R.id.signInButton)
         signInButton.setOnClickListener {
             signIn()
@@ -72,6 +81,14 @@ class MainActivity : AppCompatActivity() {
             Log.i("SickTrees", "CameraIntent")
             dispatchTakePictureIntent()
         }
+
+        // FirebaseAuth.getInstance().signOut()
+    }
+
+    fun updateUI(account: FirebaseUser?) {
+        // TODO implement this
+        // Update UI depending on user status
+        // Show sign in button if not logged in
     }
 
     fun signIn() {
@@ -84,8 +101,20 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         // Result from sign in flow
         if (requestCode === signInRequestCode) {
-            val result = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
-            handleSignInResult(result!!)
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
+                // Google Sign In was successful, authenticate with Firebase
+                val account = task.getResult(ApiException::class.java)
+                firebaseAuthWithGoogle(account!!)
+            } catch (e: ApiException) {
+                // Google Sign In failed, update UI appropriately
+                Log.w("SickTrees", "Google sign in failed", e)
+                // ...
+            }
+
+            // old
+            /*val task: GoogleSignInResult? = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
+            handleSignInResult(task!!)*/
         }
 
         // Result from camera intent
@@ -114,11 +143,36 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun handleSignInResult(result: GoogleSignInResult) {
-        Log.d("SickTrees", "handleSignInResult: " + result.isSuccess)
-        if (result.isSuccess) {
+    private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
+        Log.d("SickTrees", "firebaseAuthWithGoogle:" + acct.id!!)
+
+        val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d("SickTrees", "signInWithCredential:success")
+                    val user = auth.currentUser
+
+                    statusTextView.text = user!!.displayName
+                    statusTextView.visibility = View.VISIBLE
+                    updateUI(user)
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w("SickTrees", "signInWithCredential:failure", task.exception)
+                    //Snackbar.make(binding.mainLayout, "Authentication Failed.", Snackbar.LENGTH_SHORT).show()
+                    updateUI(null)
+                }
+
+                // ...
+            }
+    }
+
+    private fun handleSignInResult(task: GoogleSignInResult) {
+        Log.d("SickTrees", "handleSignInResult: " + task.isSuccess)
+        if (task.isSuccess) {
             // Signed in successfully, show account information
-            val account = result.signInAccount
+            val account = task.signInAccount
             statusTextView.text = account!!.displayName
             statusTextView.visibility = View.VISIBLE
         }

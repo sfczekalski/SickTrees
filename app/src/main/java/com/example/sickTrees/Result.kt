@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageMetadata
 import com.google.firebase.storage.StorageReference
@@ -52,6 +53,19 @@ class Result : AppCompatActivity() {
             // Set prediction in layout
             val textView = findViewById<TextView>(R.id.label)
             textView.text = pred
+
+            // User status
+            val auth = FirebaseAuth.getInstance()
+            val statusTextView = findViewById<TextView>(R.id.status_textview)
+            if (auth.getCurrentUser() != null) {
+                // User is logged in
+                val account = auth.currentUser
+                statusTextView.text = account!!.displayName
+                statusTextView.visibility = View.VISIBLE
+            } else {
+                statusTextView.text = "Niezalogowany"
+                statusTextView.visibility = View.VISIBLE
+            }
 
             // Share to Storage button reference
             storage_button = findViewById(R.id.button_storage)
