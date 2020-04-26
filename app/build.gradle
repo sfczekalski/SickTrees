@@ -66,4 +66,8 @@ dependencies {
     // Firebase Storage
     implementation 'com.google.firebase:firebase-storage:19.1.1'
 
+
+    implementation 'com.google.firebase:firebase-core:17.3.0'
+    implementation 'com.google.android.gms:play-services-auth:18.0.0'
+
 }

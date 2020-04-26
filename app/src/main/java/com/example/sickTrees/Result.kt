@@ -53,11 +53,6 @@ class Result : AppCompatActivity() {
             val textView = findViewById<TextView>(R.id.label)
             textView.text = pred
 
-            /*fab.setOnClickListener { view ->
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-            }*/
-
             // Share to Storage button reference
             storage_button = findViewById(R.id.button_storage)
             // Upload progress bar reference
@@ -85,7 +80,7 @@ class Result : AppCompatActivity() {
             // Handle unsuccessful uploads
             throw it
         }.addOnSuccessListener {
-            // Handle successful upload
+            // Handle successful uploads
             progress_bar.visibility = View.INVISIBLE
             storage_button.isEnabled = true
         }
