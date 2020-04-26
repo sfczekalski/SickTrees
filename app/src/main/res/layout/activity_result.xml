@@ -6,6 +6,25 @@
     android:layout_height="match_parent"
     tools:context=".Result">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+        <LinearLayout android:id="@+id/top_rectangle"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:orientation="horizontal"
+            android:background="@color/rectangle_grey_darker"/>
+        <LinearLayout android:id="@+id/bottom_rectangle"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:background="@color/rectangle_grey_lighter"
+            android:visibility="visible"/>
+    </LinearLayout>
+
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,13 +39,18 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
+        app:titleTextColor="@color/primaryTextColor"
         app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     <ImageView
-        android:layout_width="810px"
-        android:layout_height="544px"
+        android:layout_width="match_parent"
+        android:layout_height="1365dp"
+        android:adjustViewBounds="true"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:layout_margin="16dp"
+        android:layout_below="@id/toolbar"
+        android:layout_above="@id/label"
+        android:textColor="@color/primaryTextColor"
         android:src="@drawable/ic_launcher_background"
         android:id="@+id/image"/>
 
@@ -34,40 +58,35 @@
         android:id="@+id/label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/image"
+        android:layout_above="@id/upload_progress_bar"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:text="@string/class_default"
-        android:textSize="16pt" />
+        android:textSize="16pt"
+        android:textColor="@color/primaryTextColor"/>
 
     <Button
         android:id="@+id/button_storage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentRight="true"
         android:layout_below="@id/image"
+        android:layout_margin="16dp"
+        android:background="@drawable/button_back"
         android:text="Save in Storage"
-        android:onClick="saveInStorage"/>
-    
+        android:textColor="@color/primaryTextColor"
+        android:onClick="saveInStorage"
+        />
+
     <ProgressBar
         android:id="@+id/upload_progress_bar"
-        style="@style/Widget.AppCompat.ProgressBar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="16dp"
         android:layout_centerHorizontal="true"
-        android:indeterminate="true"
-        android:visibility="gone"/>
-
-    <TextView
-        android:id="@+id/status_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:layout_marginBottom="16dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:visibility="invisible"
-        />
+        android:indeterminate="true"
+        android:visibility="invisible"/>
 
 </RelativeLayout>

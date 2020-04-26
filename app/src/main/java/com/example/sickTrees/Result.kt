@@ -56,16 +56,6 @@ class Result : AppCompatActivity() {
 
             // User status
             val auth = FirebaseAuth.getInstance()
-            val statusTextView = findViewById<TextView>(R.id.status_textview)
-            if (auth.getCurrentUser() != null) {
-                // User is logged in
-                val account = auth.currentUser
-                statusTextView.text = account!!.displayName
-                statusTextView.visibility = View.VISIBLE
-            } else {
-                statusTextView.text = "Niezalogowany"
-                statusTextView.visibility = View.VISIBLE
-            }
 
             // Share to Storage button reference
             storage_button = findViewById(R.id.button_storage)

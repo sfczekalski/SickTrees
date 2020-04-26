@@ -8,5 +8,6 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <string name="please_login">To save images to cloud service, please log in using your Google account</string>
 
 </resources>

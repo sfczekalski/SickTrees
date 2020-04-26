@@ -38,6 +38,9 @@ class MainActivity : AppCompatActivity() {
     private val signInRequestCode = 9001
     
     lateinit var statusTextView: TextView
+    lateinit var pleaseSignInTextView: TextView
+    lateinit var singInButton: SignInButton
+
     private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,10 +70,11 @@ class MainActivity : AppCompatActivity() {
         val account: GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(this)
         //updateUI(account)
 
-        val singInButton: SignInButton = findViewById(R.id.signInButton)
+        singInButton = findViewById(R.id.signInButton)
         signInButton.setOnClickListener {
             signIn()
         }
+        pleaseSignInTextView = findViewById(R.id.please_login_textview)
 
         // Sing in status textview
         statusTextView = findViewById(R.id.status_textview)
@@ -156,6 +160,8 @@ class MainActivity : AppCompatActivity() {
 
                     statusTextView.text = user!!.displayName
                     statusTextView.visibility = View.VISIBLE
+                    pleaseSignInTextView.visibility = View.INVISIBLE
+                    signInButton.visibility = View.INVISIBLE
                     updateUI(user)
                 } else {
                     // If sign in fails, display a message to the user.
