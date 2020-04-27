@@ -57,19 +57,12 @@ class MainActivity : AppCompatActivity() {
         Log.i("SickTrees", classifierPath)
         classifier = Classifier(classifierPath)
 
-        // Firebase auth instance
-        auth = FirebaseAuth.getInstance()
-        val currentUser = auth.currentUser
-
         // Sing in button
         val options: GoogleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
         mSignInClient = GoogleSignIn.getClient(this, options)
-
-        val account: GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(this)
-        //updateUI(account)
 
         singInButton = findViewById(R.id.signInButton)
         signInButton.setOnClickListener {
@@ -80,12 +73,18 @@ class MainActivity : AppCompatActivity() {
         // Sing in status textview
         statusTextView = findViewById(R.id.status_textview)
 
+        // Firebase auth instance
+        auth = FirebaseAuth.getInstance()
+        val currentUser = auth.currentUser
+
         // Capture button
         val capture: Button = findViewById(R.id.button)
         capture.setOnClickListener {
             Log.i("SickTrees", "CameraIntent")
             dispatchTakePictureIntent()
         }
+
+        updateUI(currentUser)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -144,8 +143,6 @@ class MainActivity : AppCompatActivity() {
             Log.i("SickTrees", "ResultOk")
 
             val resultView = Intent(this, Result::class.java)
-
-            galleryAddPic()
 
             resultView.putExtra("imagedata", data?.extras)
             var imageBitmap: Bitmap? = null
@@ -232,13 +229,4 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
-    private fun galleryAddPic() {
-        Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE).also { mediaScanIntent ->
-            val f = File(currentPhotoPath)
-            mediaScanIntent.data = Uri.fromFile(f)
-            sendBroadcast(mediaScanIntent)
-        }
-    }
-
 }

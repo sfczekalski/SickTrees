@@ -3,11 +3,9 @@ package com.example.sickTrees
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.View
-import android.widget.Button
-import android.widget.TextView
-import android.widget.ImageView
-import android.widget.ProgressBar
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
@@ -64,36 +62,42 @@ class Result : AppCompatActivity() {
     }
 
     fun saveInStorage(view: View) {
-        val stream = ByteArrayOutputStream()
-        imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
-        val byteArray = stream.toByteArray()
+        if (auth.currentUser == null) {
+            val toast =
+                Toast.makeText(applicationContext, R.string.login_to_save, Toast.LENGTH_LONG)
+            toast.setGravity(Gravity.CENTER or Gravity.BOTTOM, 0, 0)
+            toast.show()
+        } else {
 
-        // Place to save the file
-        val userFolder: String? = auth.uid
-        val path: String = "images/" + userFolder + "/" + UUID.randomUUID() + ".png"
-        val firebaseRef: StorageReference = storage.getReference(path)
+            val stream = ByteArrayOutputStream()
+            imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+            val byteArray = stream.toByteArray()
 
-        // Add prediction to metadata
-        val meta: StorageMetadata = StorageMetadata.Builder().
-            setCustomMetadata("label", pred).
-            build()
+            // Place to save the file
+            val userFolder: String? = auth.uid
+            val path: String = "images/" + userFolder + "/" + UUID.randomUUID() + ".png"
+            val firebaseRef: StorageReference = storage.getReference(path)
 
-        // Upload
-        val uploadTask: UploadTask = firebaseRef.putBytes(byteArray, meta)
+            // Add prediction to metadata
+            val meta: StorageMetadata =
+                StorageMetadata.Builder().setCustomMetadata("label", pred).build()
 
-        // While uploading, make progress bar visible and storage button disabled
-        progress_bar.visibility = View.VISIBLE
-        storage_button.isEnabled = false
+            // Upload
+            val uploadTask: UploadTask = firebaseRef.putBytes(byteArray, meta)
 
-        uploadTask.addOnFailureListener {
-            // Handle unsuccessful uploads
-            throw it
-        }.addOnSuccessListener {
-            // Handle successful uploads
-            progress_bar.visibility = View.INVISIBLE
-            storage_button.isEnabled = true
+            // While uploading, make progress bar visible and storage button disabled
+            progress_bar.visibility = View.VISIBLE
+            storage_button.isEnabled = false
+
+            uploadTask.addOnFailureListener {
+                // Handle unsuccessful uploads
+                throw it
+            }.addOnSuccessListener {
+                // Handle successful uploads
+                progress_bar.visibility = View.INVISIBLE
+                storage_button.isEnabled = true
+            }
         }
-
     }
 
 }

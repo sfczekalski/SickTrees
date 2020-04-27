@@ -14,5 +14,6 @@
     <string name="label">Class</string>
     <string name="logged_message">Loged in!</string>
     <string name="logged_out_message">Logged out!</string>
+    <string name="login_to_save">Log in to save image to cloud!</string>
 
 </resources>
