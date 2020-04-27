@@ -1,6 +1,7 @@
 package com.example.sickTrees
 
-//import android.R.attr
+import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
@@ -8,18 +9,19 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.FileProvider
+import androidx.fragment.app.DialogFragment
 import com.google.android.gms.auth.api.signin.*
-//import androidx.test.orchestrator.junit.BundleJUnitUtils.getResult
 import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import kotlinx.android.synthetic.main.activity_main.*
-//import org.junit.experimental.results.ResultMatchers.isSuccessful
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -87,6 +89,18 @@ class MainActivity : AppCompatActivity() {
         }
 
         // FirebaseAuth.getInstance().signOut()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.options_menu, menu);
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        auth.signOut()
+        updateUI(null)
+        return super.onOptionsItemSelected(item)
     }
 
     fun updateUI(user: FirebaseUser?) {
