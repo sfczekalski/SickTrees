@@ -35,7 +35,7 @@ class Result : AppCompatActivity() {
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
             setContentView(R.layout.activity_result)
-            setSupportActionBar(toolbar)
+            //setSupportActionBar(toolbar)
 
             //val imageBitmap = intent.getBundleExtra("imagedata")["data"] as Bitmap?
             // Get image from intent

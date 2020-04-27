@@ -1,28 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/rectangle_grey_darker"
     tools:context=".Result">
 
-    <LinearLayout
+    <LinearLayout android:id="@+id/top_rectangle"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical">
-        <LinearLayout android:id="@+id/top_rectangle"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:orientation="horizontal"
+        android:background="@color/colorPrimary">
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="3"
-            android:orientation="horizontal"
-            android:background="@color/rectangle_grey_darker"/>
-        <LinearLayout android:id="@+id/bottom_rectangle"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/label"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:text="@string/class_default"
+                android:textSize="16pt"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:background="@color/colorPrimaryDark"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/label"
+                android:adjustViewBounds="true"
+                android:layout_margin="16dp"
+                android:textColor="@color/primaryTextColor"
+                android:src="@drawable/ic_launcher_background"
+                android:id="@+id/image"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout android:id="@+id/bottom_rectangle"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:background="@color/colorPrimaryLight"
+        android:visibility="visible">
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:background="@color/rectangle_grey_lighter"
-            android:visibility="visible"/>
+            android:layout_height="match_parent">
+            <Button
+                android:id="@+id/button_storage"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="8dp"
+                android:background="@drawable/button_back"
+                android:text="Save in Storage"
+                android:textColor="@color/primaryTextColor"
+                android:onClick="saveInStorage"
+                />
+
+            <ProgressBar
+                android:id="@+id/upload_progress_bar"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:indeterminate="true"
+                android:visibility="invisible"/>
+        </RelativeLayout>
     </LinearLayout>
 
     <com.google.android.material.appbar.AppBarLayout
@@ -32,61 +85,4 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/content_result" />
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        app:titleTextColor="@color/primaryTextColor"
-        app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="1365dp"
-        android:adjustViewBounds="true"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="16dp"
-        android:layout_below="@id/toolbar"
-        android:layout_above="@id/label"
-        android:textColor="@color/primaryTextColor"
-        android:src="@drawable/ic_launcher_background"
-        android:id="@+id/image"/>
-
-    <TextView
-        android:id="@+id/label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/upload_progress_bar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:text="@string/class_default"
-        android:textSize="16pt"
-        android:textColor="@color/primaryTextColor"/>
-
-    <Button
-        android:id="@+id/button_storage"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/image"
-        android:layout_margin="16dp"
-        android:background="@drawable/button_back"
-        android:text="Save in Storage"
-        android:textColor="@color/primaryTextColor"
-        android:onClick="saveInStorage"
-        />
-
-    <ProgressBar
-        android:id="@+id/upload_progress_bar"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:indeterminate="true"
-        android:visibility="invisible"/>
-
-</RelativeLayout>
+</LinearLayout>
