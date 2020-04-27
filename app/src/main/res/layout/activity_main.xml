@@ -40,8 +40,6 @@
         app:popupTheme="@style/AppTheme.PopupOverlay"
         app:titleTextColor="@color/primaryTextColor"/>
 
-    <include layout="@layout/content_main" />
-
     <Button
         android:id="@+id/button"
         android:layout_width="80dp"

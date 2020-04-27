@@ -87,8 +87,6 @@ class MainActivity : AppCompatActivity() {
             Log.i("SickTrees", "CameraIntent")
             dispatchTakePictureIntent()
         }
-
-        // FirebaseAuth.getInstance().signOut()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Sick Trees</string>
-    <string name="picture_button_text">Take A Picture</string>
+    <string name="picture_button_text">Take a Picture</string>
+    <string name="save_storage_button">Save in Storage</string>
     <string name="title_activity_result">Result</string>
     <string name="class_default">Class</string>
     <!-- Strings used for fragments for navigation -->
@@ -10,5 +11,6 @@
     <string name="previous">Previous</string>
     <string name="please_login">To save images to cloud service, please log in using your Google account</string>
     <string name="logout">Log out</string>
+    <string name="label">Class</string>
 
 </resources>

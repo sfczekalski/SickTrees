@@ -27,7 +27,7 @@
                 android:text="@string/class_default"
                 android:textSize="16pt"
                 android:textAlignment="center"
-                android:textColor="#ffffff"
+                android:textColor="@color/onDarkTextColor"
                 android:background="@color/colorPrimaryDark"/>
             <ImageView
                 android:layout_width="match_parent"
@@ -60,7 +60,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_margin="8dp"
                 android:background="@drawable/button_back"
-                android:text="Save in Storage"
+                android:text="@string/save_storage_button"
                 android:textColor="@color/primaryTextColor"
                 android:onClick="saveInStorage"
                 />

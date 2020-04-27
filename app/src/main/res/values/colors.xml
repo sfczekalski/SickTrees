@@ -5,6 +5,7 @@
     <color name="colorPrimaryLight">#80e27e</color>
     <color name="colorPrimaryDark">#087f23</color>
     <color name="primaryTextColor">#000000</color>
+    <color name="onDarkTextColor">#ffffff</color>
     <color name="colorAccent">#ef5350</color>
 
     <color name="rectangle_grey_lighter">#eeeeee</color>
