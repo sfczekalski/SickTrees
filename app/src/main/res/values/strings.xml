@@ -12,5 +12,7 @@
     <string name="please_login">To save images to cloud service, please log in using your Google account</string>
     <string name="logout">Log out</string>
     <string name="label">Class</string>
+    <string name="logged_message">Loged in!</string>
+    <string name="logged_out_message">Logged out!</string>
 
 </resources>

@@ -1,7 +1,5 @@
 package com.example.sickTrees
 
-import android.app.AlertDialog
-import android.app.Dialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
@@ -9,15 +7,16 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
+import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.FileProvider
-import androidx.fragment.app.DialogFragment
 import com.google.android.gms.auth.api.signin.*
 import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
@@ -98,6 +97,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         auth.signOut()
         updateUI(null)
+        sendToast(R.string.logged_out_message)
         return super.onOptionsItemSelected(item)
     }
 
@@ -173,6 +173,8 @@ class MainActivity : AppCompatActivity() {
                     Log.d("SickTrees", "signInWithCredential:success")
                     val user = auth.currentUser
                     updateUI(user)
+
+                    sendToast(R.string.logged_message)
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w("SickTrees", "signInWithCredential:failure", task.exception)
@@ -181,6 +183,13 @@ class MainActivity : AppCompatActivity() {
 
                 // ...
             }
+    }
+
+    private fun sendToast(message: Int) {
+        val toast =
+            Toast.makeText(applicationContext, message, Toast.LENGTH_LONG)
+        toast.setGravity(Gravity.CENTER or Gravity.BOTTOM, 0, 0)
+        toast.show()
     }
 
     @Throws(IOException::class)
