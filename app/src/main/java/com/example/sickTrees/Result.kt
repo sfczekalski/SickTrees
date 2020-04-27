@@ -29,15 +29,15 @@ class Result : AppCompatActivity() {
     lateinit var storage_button: Button
     lateinit var progress_bar: ProgressBar
 
+    lateinit var auth: FirebaseAuth
+
 
     val storage: FirebaseStorage = FirebaseStorage.getInstance()
 
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
             setContentView(R.layout.activity_result)
-            //setSupportActionBar(toolbar)
 
-            //val imageBitmap = intent.getBundleExtra("imagedata")["data"] as Bitmap?
             // Get image from intent
             PhotoPath = intent.getStringExtra("photoPath")
             imageBitmap = Utils.compressResultImg(PhotoPath)
@@ -55,7 +55,7 @@ class Result : AppCompatActivity() {
             textView.text = pred
 
             // User status
-            val auth = FirebaseAuth.getInstance()
+            auth = FirebaseAuth.getInstance()
 
             // Share to Storage button reference
             storage_button = findViewById(R.id.button_storage)
@@ -68,12 +68,17 @@ class Result : AppCompatActivity() {
         imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
         val byteArray = stream.toByteArray()
 
-        val path: String = "images/" + UUID.randomUUID() + ".png"
+        // Place to save the file
+        val userFolder: String? = auth.uid
+        val path: String = "images/" + userFolder + "/" + UUID.randomUUID() + ".png"
         val firebaseRef: StorageReference = storage.getReference(path)
 
+        // Add prediction to metadata
         val meta: StorageMetadata = StorageMetadata.Builder().
             setCustomMetadata("label", pred).
             build()
+
+        // Upload
         val uploadTask: UploadTask = firebaseRef.putBytes(byteArray, meta)
 
         // While uploading, make progress bar visible and storage button disabled

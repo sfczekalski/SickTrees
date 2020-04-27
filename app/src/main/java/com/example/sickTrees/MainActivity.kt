@@ -115,10 +115,6 @@ class MainActivity : AppCompatActivity() {
                 Log.w("SickTrees", "Google sign in failed", e)
                 // ...
             }
-
-            // old
-            /*val task: GoogleSignInResult? = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
-            handleSignInResult(task!!)*/
         }
 
         // Result from camera intent
@@ -131,8 +127,6 @@ class MainActivity : AppCompatActivity() {
             galleryAddPic()
 
             resultView.putExtra("imagedata", data?.extras)
-
-            //val imageBitmap = data?.extras!!["data"] as Bitmap?
             var imageBitmap: Bitmap? = null
 
             if (currentPhotoPath != null) {
@@ -166,22 +160,11 @@ class MainActivity : AppCompatActivity() {
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w("SickTrees", "signInWithCredential:failure", task.exception)
-                    //Snackbar.make(binding.mainLayout, "Authentication Failed.", Snackbar.LENGTH_SHORT).show()
                     updateUI(null)
                 }
 
                 // ...
             }
-    }
-
-    private fun handleSignInResult(task: GoogleSignInResult) {
-        Log.d("SickTrees", "handleSignInResult: " + task.isSuccess)
-        if (task.isSuccess) {
-            // Signed in successfully, show account information
-            val account = task.signInAccount
-            statusTextView.text = account!!.displayName
-            statusTextView.visibility = View.VISIBLE
-        }
     }
 
     @Throws(IOException::class)
