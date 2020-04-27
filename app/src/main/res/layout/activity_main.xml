@@ -82,9 +82,9 @@
         android:text=""
         android:textColor="@color/colorAccent"
         android:layout_marginBottom="16dp"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:visibility="invisible"
+        android:layout_below="@id/toolbar"
         />
 
 </RelativeLayout>
