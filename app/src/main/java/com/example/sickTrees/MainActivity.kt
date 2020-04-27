@@ -89,10 +89,19 @@ class MainActivity : AppCompatActivity() {
         // FirebaseAuth.getInstance().signOut()
     }
 
-    fun updateUI(account: FirebaseUser?) {
-        // TODO implement this
+    fun updateUI(user: FirebaseUser?) {
         // Update UI depending on user status
-        // Show sign in button if not logged in
+        if (user == null) {
+            statusTextView.text = ""
+            statusTextView.visibility = View.INVISIBLE
+            pleaseSignInTextView.visibility = View.VISIBLE
+            signInButton.visibility = View.VISIBLE
+        } else {
+            statusTextView.text = user.displayName
+            statusTextView.visibility = View.VISIBLE
+            pleaseSignInTextView.visibility = View.INVISIBLE
+            signInButton.visibility = View.INVISIBLE
+        }
     }
 
     fun signIn() {
@@ -151,11 +160,6 @@ class MainActivity : AppCompatActivity() {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d("SickTrees", "signInWithCredential:success")
                     val user = auth.currentUser
-
-                    statusTextView.text = user!!.displayName
-                    statusTextView.visibility = View.VISIBLE
-                    pleaseSignInTextView.visibility = View.INVISIBLE
-                    signInButton.visibility = View.INVISIBLE
                     updateUI(user)
                 } else {
                     // If sign in fails, display a message to the user.
