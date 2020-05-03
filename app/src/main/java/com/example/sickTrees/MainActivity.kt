@@ -155,6 +155,7 @@ class MainActivity : AppCompatActivity() {
 
             resultView.putExtra("pred", pred)
             resultView.putExtra("photoPath", currentPhotoPath)
+            galleryAddPic()
             startActivity(resultView)
         }
     }
@@ -228,5 +229,17 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun galleryAddPic() {
+        /*Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE).also { mediaScanIntent ->
+            Log.i("SickTrees", "Saving image to$currentPhotoPath")
+            val f = File(currentPhotoPath)
+            mediaScanIntent.data = Uri.fromFile(f)
+            sendBroadcast(mediaScanIntent)
+        }*/
+        val f = File(currentPhotoPath)
+        var client: MyMediaScannerConnectionClient =
+            MyMediaScannerConnectionClient(applicationContext, f, null)
     }
 }
